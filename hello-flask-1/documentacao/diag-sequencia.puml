@@ -1,0 +1,36 @@
+@startuml
+title Flask: carregamento da página e interação com botão
+
+actor usuario as "Usuário"
+boundary browser as "Navegador Web"
+control flask as "Flask"
+
+activate usuario
+activate browser
+
+usuario -> browser : acessa
+browser -> flask : HTTP GET /
+
+activate flask
+
+flask -> flask : app.py() recebe requisição
+flask -> flask : render_template()
+flask -> flask : lê index.html e gera HTML
+
+flask --> browser : HTML
+deactivate flask
+
+browser --> usuario : exibe a página
+
+== Interação local no navegador ==
+
+usuario -> browser : clica no botão
+activate browser
+browser -> browser : JavaScript: textContent("msg")
+browser --> usuario : exibe mensagem atualizada
+deactivate browser
+
+deactivate browser
+deactivate usuario
+
+@enduml
