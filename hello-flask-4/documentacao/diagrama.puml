@@ -1,0 +1,58 @@
+
+@startuml
+title OBJETIVO: Enviar, gravar e buscar dados (hello flask 4)
+
+actor usuario as "Usuário"
+boundary browser as "browser"
+control flask as "Flask"
+database sqlite as "SQLite\n(banco.db)"
+
+' ---- inicialização do servidor ----
+flask -> sqlite : CREATE TABLE
+sqlite --> flask : ok
+deactivate flask
+
+== Página inicial ==
+
+usuario -> browser : acessa
+activate browser
+activate flask
+browser -> flask : HTTP GET /
+flask --> browser : HTML
+browser --> usuario : exibe a página
+
+== Enviar dados (grava no banco) ==
+
+usuario -> browser : clica no botão
+browser -> flask : HTTP POST /api/post-hello-dados (JSON: nome, idade)
+flask -> flask : valida idade\nmonta "situacao"
+
+flask -> sqlite : INSERT INTO consultas
+activate sqlite
+sqlite --> flask : ok (saved)
+deactivate sqlite
+
+flask --> browser : {"mensagem", "situacao"} (JSON)
+browser -> browser : textContent(mensagem)
+browser --> usuario : página atualizada
+deactivate browser
+
+
+== Buscar dados ==
+
+usuario -> browser : solicita pessoas
+activate browser
+browser -> flask : HTTP GET /api/pessoas
+
+flask -> sqlite : SELECT FROM consultas
+activate sqlite
+sqlite --> flask : linhas (resultset)
+deactivate sqlite
+
+flask -> flask : monta lista de dicionários
+flask --> browser : JSON com a lista
+browser --> usuario : exibe os dados
+deactivate browser
+
+deactivate flask
+@enduml

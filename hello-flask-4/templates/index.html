@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello Flask 4</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<h1>Hello World 4 - Persistencia de dados</h1>
+
+	<input type="text" id="nome" placeholder="seu nome aqui">
+	<input type="text" id="idade" placeholder="sua idade aqui">
+    <button id="botao4">Botao 4</button> 
+
+	<span id="mensagem"></span>
+
+   <!-- <h3>Historico de consultas:</h3>
+	<ul id="lista"></ul>  NOVO: historico de consultas -->
+
+
+	<h3 >Historico de consultas:</h3>
+
+    <table id="lista" border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
